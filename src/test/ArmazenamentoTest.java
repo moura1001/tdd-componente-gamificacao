@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import tddComponenteGamificacao.Armazenamento;
 import tddComponenteGamificacao.ArmazenamentoArquivo;
+import tddComponenteGamificacao.usuario.UsuarioException;
 
 class ArmazenamentoTest {
 
@@ -19,6 +20,22 @@ class ArmazenamentoTest {
 			Armazenamento armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
 			int quantidadePontos = armazenamento.obterQuantidadeDePontos("guerra", "estrela");
 			assertEquals(25, quantidadePontos);
+		}
+		
+		@Test
+		void deveriaInformarQueOUsuarioRodrigoPossui3PontosDoTipoEnergia() {
+			Armazenamento armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
+			int quantidadePontos = armazenamento.obterQuantidadeDePontos("rodrigo", "energia");
+			assertEquals(3, quantidadePontos);
+		}
+		
+		@Test
+		void deveriaLancarExcecaoParaConsultaDeTipoDeUsuarioInvalido() {
+			Armazenamento armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
+			UsuarioException thrown = assertThrows(UsuarioException.class, () -> {
+				armazenamento.obterQuantidadeDePontos("unknow", "moeda");
+	        });
+	        assertEquals("Usuário não existe", thrown.getMessage());
 		}
 	}
 

@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import tddComponenteGamificacao.usuario.Usuario;
+import tddComponenteGamificacao.usuario.UsuarioException;
 
 public class ArmazenamentoArquivo implements Armazenamento {
 
@@ -19,12 +20,12 @@ public class ArmazenamentoArquivo implements Armazenamento {
 	}
 
 	@Override
-	public int obterQuantidadeDePontos(String usuario, String tipoPonto) {
+	public int obterQuantidadeDePontos(String usuario, String tipoPonto) throws UsuarioException {
 		if (_usuarios.containsKey(usuario)) {
 			Usuario u = _usuarios.get(usuario);
 			return u.obterQuantidadeDePontos(tipoPonto);
 		}
-		return 0;
+		throw new UsuarioException("Usuário não existe");
 	}
 
 	private void carregarDadosDoArquivo() throws ArmazenamentoArquivoException {
