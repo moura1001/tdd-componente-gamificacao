@@ -6,22 +6,23 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import tddComponenteGamificacao.usuario.Usuario;
+
 public class ArmazenamentoArquivo implements Armazenamento {
 
-	private Map<String, LinkedHashMap<String, Integer>> usuarios = new LinkedHashMap<String, LinkedHashMap<String, Integer>>();
-	private String nomeArquivo;
+	private Map<String, Usuario> _usuarios = new LinkedHashMap<String, Usuario>();
+	private String _nomeArquivo;
 
 	public ArmazenamentoArquivo(String nomeArquivo) {
-		this.nomeArquivo = nomeArquivo;
+		_nomeArquivo = nomeArquivo;
 		carregarDadosDoArquivo();
 	}
 
 	@Override
 	public int obterQuantidadeDePontos(String usuario, String tipoPonto) {
-		if (this.usuarios.containsKey(usuario)) {
-			LinkedHashMap<String, Integer> pontos = this.usuarios.get(usuario);
-			if(pontos.containsKey(tipoPonto))
-				return pontos.get(tipoPonto);
+		if (_usuarios.containsKey(usuario)) {
+			Usuario u = _usuarios.get(usuario);
+			return u.obterQuantidadeDePontos(tipoPonto);
 		}
 		return 0;
 	}
@@ -31,22 +32,21 @@ public class ArmazenamentoArquivo implements Armazenamento {
 		BufferedReader reader;
 
 		try {
-			reader = new BufferedReader(new FileReader(this.nomeArquivo));
+			reader = new BufferedReader(new FileReader(_nomeArquivo));
 			// first line
 			String line = reader.readLine();
 
 			while (line != null) {
 				String[] registro = line.split(";");
-				String usuario = registro[0];
-				LinkedHashMap<String, Integer> pontos = new LinkedHashMap<String, Integer>();
-				this.usuarios.put(usuario, pontos);
+				Usuario usuario = new Usuario(registro[0]);
+				_usuarios.put(usuario.getNome(), usuario);
 
 				for (String coluna : registro) {
-					if (coluna.equals(usuario))
+					if (coluna.equals(usuario.getNome()))
 						continue;
 
 					String[] infoPonto = coluna.split(":");
-					pontos.put(infoPonto[0], Integer.valueOf(infoPonto[1]));
+					usuario.adicionarPontos(infoPonto[0], Integer.valueOf(infoPonto[1]));
 				}
 
 				// next line
@@ -57,9 +57,9 @@ public class ArmazenamentoArquivo implements Armazenamento {
 			reader.close();
 		} catch (IOException e) {
 			throw new ArmazenamentoArquivoException(
-					"Erro no processamento do arquivo " + nomeArquivo + ": " + e.getMessage());
+					"Erro no processamento do arquivo " + _nomeArquivo + ": " + e.getMessage());
 		} catch (NumberFormatException e) {
-			throw new ArmazenamentoArquivoException("Arquivo " + nomeArquivo
+			throw new ArmazenamentoArquivoException("Arquivo " + _nomeArquivo
 					+ " é inválido. Não foi possível processar a linha " + lineCounter + ": " + e.getMessage());
 		}
 	}
