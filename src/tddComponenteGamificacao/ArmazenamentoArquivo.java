@@ -9,6 +9,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import tddComponenteGamificacao.usuario.InfoPonto;
+import tddComponenteGamificacao.usuario.TipoPonto;
 import tddComponenteGamificacao.usuario.Usuario;
 import tddComponenteGamificacao.usuario.UsuarioException;
 
@@ -84,6 +85,16 @@ public class ArmazenamentoArquivo implements Armazenamento {
 				
 		}
 		return usuarios;
+	}
+
+	@Override
+	public Map<TipoPonto, Integer> obterTodosOsTiposDePontoRegistradosParaOUsuario(String usuario)
+			throws UsuarioException {
+		if (_usuarios.containsKey(usuario)) {
+			Usuario u = _usuarios.get(usuario);
+			return u.obterPontos();
+		}
+		throw new UsuarioException("Usuário não existe");
 	}
 
 }

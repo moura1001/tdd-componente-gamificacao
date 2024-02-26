@@ -1,6 +1,6 @@
 package tddComponenteGamificacao.usuario;
 
-enum TipoPonto {
+public enum TipoPonto {
 	ENERGIA, ESTRELA, MOEDA;
 
 	private static TipoPonto encontrarPeloNome(String nome) {

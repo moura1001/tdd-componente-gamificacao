@@ -40,4 +40,10 @@ public class Usuario {
 		}
 		return null;
 	}
+
+	public Map<TipoPonto, Integer> obterPontos() {
+		Map<TipoPonto, Integer> pontos = new EnumMap<>(TipoPonto.class);
+		pontos.putAll(_pontos);
+		return pontos;
+	}
 }

@@ -2,7 +2,9 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import tddComponenteGamificacao.Armazenamento;
 import tddComponenteGamificacao.ArmazenamentoArquivo;
 import tddComponenteGamificacao.usuario.InfoPonto;
+import tddComponenteGamificacao.usuario.TipoPonto;
 import tddComponenteGamificacao.usuario.UsuarioException;
 
 class ArmazenamentoTest {
@@ -66,6 +69,18 @@ class ArmazenamentoTest {
 					new InfoPonto("fernandes", "estrela", 19)
 			));
 			SortedSet<InfoPonto> resultadoObtido = armazenamento.obterTodosOsUsuariosComTipoDePonto("estrela");
+			assertEquals(resultadoEsperado, resultadoObtido);
+		}
+		
+		@Test
+		void deveriaObterTodosOsTiposDePontosJaRegistradosParaOUsuarioGuerra() {
+			Armazenamento armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
+			Map<TipoPonto, Integer> resultadoEsperado = new EnumMap<>(TipoPonto.class);
+			resultadoEsperado.putAll(Map.of(
+					TipoPonto.MOEDA, 20,
+					TipoPonto.ESTRELA, 25
+			));
+			Map<TipoPonto, Integer> resultadoObtido = armazenamento.obterTodosOsTiposDePontoRegistradosParaOUsuario("guerra");
 			assertEquals(resultadoEsperado, resultadoObtido);
 		}
 	}
