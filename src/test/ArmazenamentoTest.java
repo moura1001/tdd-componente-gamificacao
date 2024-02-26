@@ -30,12 +30,21 @@ class ArmazenamentoTest {
 		}
 		
 		@Test
-		void deveriaLancarExcecaoParaConsultaDeTipoDeUsuarioInvalido() {
+		void deveriaLancarExcecaoParaConsultaDeUsuarioInvalido() {
 			Armazenamento armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
 			UsuarioException thrown = assertThrows(UsuarioException.class, () -> {
 				armazenamento.obterQuantidadeDePontos("unknow", "moeda");
 	        });
 	        assertEquals("Usuário não existe", thrown.getMessage());
+		}
+		
+		@Test
+		void deveriaLancarExcecaoParaConsultaDeTipoDePontoInvalido() {
+			Armazenamento armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
+			UsuarioException thrown = assertThrows(UsuarioException.class, () -> {
+				armazenamento.obterQuantidadeDePontos("toco", "unknow");
+	        });
+	        assertEquals("Tipo de ponto inválido: unknow", thrown.getMessage());
 		}
 	}
 
