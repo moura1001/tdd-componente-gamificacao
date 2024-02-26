@@ -5,9 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import tddComponenteGamificacao.usuario.InfoPonto;
 import tddComponenteGamificacao.usuario.Usuario;
 import tddComponenteGamificacao.usuario.UsuarioException;
 
@@ -72,15 +73,14 @@ public class ArmazenamentoArquivo implements Armazenamento {
 	}
 
 	@Override
-	public SortedMap<String, Integer> obterTodosOsUsuariosComTipoDePonto(String tipoPonto) throws UsuarioException {
-		SortedMap<String, Integer> usuarios = new TreeMap<String, Integer>();
+	public SortedSet<InfoPonto> obterTodosOsUsuariosComTipoDePonto(String tipoPonto) throws UsuarioException {
+		SortedSet<InfoPonto> usuarios = new TreeSet<>();
 		for (Map.Entry<String, Usuario> entrada : _usuarios.entrySet()) {
-			String nomeUsuario = entrada.getKey();
 			Usuario usuario = entrada.getValue();
 			
-			int quantidadeDePontos = usuario.obterQuantidadeDePontos(tipoPonto);
-			if(quantidadeDePontos > 0)
-				usuarios.put(nomeUsuario, quantidadeDePontos);
+			InfoPonto infoPonto = usuario.obterInfoSobrePontos(tipoPonto);
+			if(infoPonto != null)
+				usuarios.add(infoPonto);
 				
 		}
 		return usuarios;

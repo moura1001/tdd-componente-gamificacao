@@ -2,9 +2,9 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import tddComponenteGamificacao.Armazenamento;
 import tddComponenteGamificacao.ArmazenamentoArquivo;
+import tddComponenteGamificacao.usuario.InfoPonto;
 import tddComponenteGamificacao.usuario.UsuarioException;
 
 class ArmazenamentoTest {
@@ -58,9 +59,13 @@ class ArmazenamentoTest {
 		@Test
 		void deveriaObterTodosOsUsuariosQueReceberamUmTipoDePontoEspecifico() {
 			Armazenamento armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
-			SortedMap<String, Integer> resultadoEsperado = new TreeMap<String, Integer>();
-			resultadoEsperado.putAll(Map.of("rodrigo", 17, "guerra", 25, "fernandes", 19));
-			SortedMap<String, Integer> resultadoObtido = armazenamento.obterTodosOsUsuariosComTipoDePonto("estrela");
+			SortedSet<InfoPonto> resultadoEsperado = new TreeSet<>();
+			resultadoEsperado.addAll(List.of(
+					new InfoPonto("rodrigo", "estrela", 17),
+					new InfoPonto("guerra", "estrela", 25),
+					new InfoPonto("fernandes", "estrela", 19)
+			));
+			SortedSet<InfoPonto> resultadoObtido = armazenamento.obterTodosOsUsuariosComTipoDePonto("estrela");
 			assertEquals(resultadoEsperado, resultadoObtido);
 		}
 	}

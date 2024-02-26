@@ -16,26 +16,28 @@ public class Usuario {
 	}
 	
 	public int obterQuantidadeDePontos(String tipoPonto) throws UsuarioException {
-		TipoPonto tipo = validarTipoPonto(tipoPonto);
+		TipoPonto tipo = TipoPonto.validarTipoPonto(tipoPonto);
 		return obterQuantidadeDePontos(tipo);
 	}
 
 	public void adicionarPontos(String tipoPonto, int quantidade) throws UsuarioException {
-		TipoPonto tipo = validarTipoPonto(tipoPonto);
+		TipoPonto tipo = TipoPonto.validarTipoPonto(tipoPonto);
 		int qtdAtual = obterQuantidadeDePontos(tipo);
 		_pontos.put(tipo, qtdAtual + quantidade);
-	}
-	
-	private TipoPonto validarTipoPonto(String tipoPonto) {
-		TipoPonto tipo = TipoPonto.encontrarPeloNome(tipoPonto);
-		if(tipo == null)
-			throw new UsuarioException("Tipo de ponto inválido: " + tipoPonto);
-		return tipo;
 	}
 	
 	private int obterQuantidadeDePontos(TipoPonto tipo) {
 		if(_pontos.containsKey(tipo))
 			return _pontos.get(tipo);
 		return 0;
+	}
+
+	public InfoPonto obterInfoSobrePontos(String tipoPonto) {
+		TipoPonto tipo = TipoPonto.validarTipoPonto(tipoPonto);
+		int qtdPontos = obterQuantidadeDePontos(tipo);
+		if(qtdPontos > 0) {
+			return new InfoPonto(getNome(), tipo, qtdPontos);
+		}
+		return null;
 	}
 }
