@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import tddComponenteGamificacao.usuario.Usuario;
 import tddComponenteGamificacao.usuario.UsuarioException;
@@ -67,6 +69,21 @@ public class ArmazenamentoArquivo implements Armazenamento {
 	private ArmazenamentoArquivoException arquivoInvalido(int lineCounter, RuntimeException e) {
 		return new ArmazenamentoArquivoException("Arquivo " + _nomeArquivo
 				+ " é inválido. Não foi possível processar a linha " + lineCounter + ": " + e.getMessage());
+	}
+
+	@Override
+	public SortedMap<String, Integer> obterTodosOsUsuariosComTipoDePonto(String tipoPonto) throws UsuarioException {
+		SortedMap<String, Integer> usuarios = new TreeMap<String, Integer>();
+		for (Map.Entry<String, Usuario> entrada : _usuarios.entrySet()) {
+			String nomeUsuario = entrada.getKey();
+			Usuario usuario = entrada.getValue();
+			
+			int quantidadeDePontos = usuario.obterQuantidadeDePontos(tipoPonto);
+			if(quantidadeDePontos > 0)
+				usuarios.put(nomeUsuario, quantidadeDePontos);
+				
+		}
+		return usuarios;
 	}
 
 }

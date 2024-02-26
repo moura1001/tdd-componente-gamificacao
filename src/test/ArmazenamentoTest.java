@@ -2,6 +2,10 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,6 +49,19 @@ class ArmazenamentoTest {
 				armazenamento.obterQuantidadeDePontos("toco", "unknow");
 	        });
 	        assertEquals("Tipo de ponto inválido: unknow", thrown.getMessage());
+		}
+	}
+	
+	@Nested
+	@DisplayName("casos de teste para info gerais sobre os pontos recebidos")
+	class InfoPontoGeral {
+		@Test
+		void deveriaObterTodosOsUsuariosQueReceberamUmTipoDePontoEspecifico() {
+			Armazenamento armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
+			SortedMap<String, Integer> resultadoEsperado = new TreeMap<String, Integer>();
+			resultadoEsperado.putAll(Map.of("rodrigo", 17, "guerra", 25, "fernandes", 19));
+			SortedMap<String, Integer> resultadoObtido = armazenamento.obterTodosOsUsuariosComTipoDePonto("estrela");
+			assertEquals(resultadoEsperado, resultadoObtido);
 		}
 	}
 
