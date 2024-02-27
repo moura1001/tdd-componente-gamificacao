@@ -104,6 +104,29 @@ class ArmazenamentoTest {
 			quantidadePontos = armazenamento.obterQuantidadeDePontos("toco", "energia");
 			assertEquals(10, quantidadePontos);
 		}
+		
+		@Test
+		void deveriaArmazenarORecebimentoDePontosDeUmNovoUsuarioENaoAfetarOsOutrosRegistros() {
+			ArmazenamentoArquivo armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
+			armazenamento.configurarArquivoDeArmazenamento("src/test/arquivo-teste-escrita.txt");
+			armazenamento.reescreverDadosNoArquivo();
+			armazenamento.armazenarPontos("usuario123", "moeda", 50);
+			armazenamento.armazenarPontos("usuario123", "estrela", 50);
+			
+			int quantidadePontos = armazenamento.obterQuantidadeDePontos("usuario123", "moeda");
+			assertEquals(50, quantidadePontos);
+			quantidadePontos = armazenamento.obterQuantidadeDePontos("usuario123", "estrela");
+			assertEquals(50, quantidadePontos);
+			
+			quantidadePontos = armazenamento.obterQuantidadeDePontos("guerra", "estrela");
+			assertEquals(25, quantidadePontos);
+			
+			quantidadePontos = armazenamento.obterQuantidadeDePontos("rodrigo", "estrela");
+			assertEquals(17, quantidadePontos);
+			
+			quantidadePontos = armazenamento.obterQuantidadeDePontos("toco", "energia");
+			assertEquals(10, quantidadePontos);
+		}
 	}
 
 }

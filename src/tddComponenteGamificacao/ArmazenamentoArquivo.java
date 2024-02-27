@@ -163,7 +163,7 @@ public class ArmazenamentoArquivo implements Armazenamento {
 	private void adicionarRegistroUsuario(String nomeUsuario, String tipoPonto, int quantidadePontos)
 			throws ArmazenamentoArquivoException {
 		try {
-			Usuario usuario = new Usuario(nomeUsuario, _usuarios.size() + 1);
+			Usuario usuario = new Usuario(nomeUsuario, _usuarios.size());
 			usuario.adicionarPontos(tipoPonto, quantidadePontos);
 			
 			// setup writer with append mode

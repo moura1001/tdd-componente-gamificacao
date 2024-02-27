@@ -1,4 +1,5 @@
 rodrigo;energia:3;estrela:17
-guerra;estrela:40;moeda:20
+guerra;estrela:25;moeda:20
 toco;energia:10
 fernandes;estrela:19
+usuario123;estrela:50;moeda:50
