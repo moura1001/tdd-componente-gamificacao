@@ -1,7 +1,9 @@
 package tddComponenteGamificacao;
 
 import java.util.Map;
+import java.util.SortedSet;
 
+import tddComponenteGamificacao.usuario.InfoPonto;
 import tddComponenteGamificacao.usuario.TipoPonto;
 
 public class Placar {
@@ -22,6 +24,10 @@ public class Placar {
 
 	public Map<TipoPonto, Integer> obterTodosOsTiposDePontoRegistradosParaOUsuario(String nomeUsuario) {
 		return _armazenamento.obterTodosOsTiposDePontoRegistradosParaOUsuario(nomeUsuario);
+	}
+
+	public SortedSet<InfoPonto> obterRankingDeUsuariosParaOTipoDePonto(String tipoPonto) {
+		return _armazenamento.obterTodosOsUsuariosComTipoDePonto(tipoPonto);
 	}
 
 }
