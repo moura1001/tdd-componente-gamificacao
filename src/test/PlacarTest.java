@@ -2,11 +2,15 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import tddComponenteGamificacao.Armazenamento;
 import tddComponenteGamificacao.Placar;
+import tddComponenteGamificacao.usuario.TipoPonto;
 import test.utils.ArmazenamentoMock;
 
 public class PlacarTest {
@@ -28,6 +32,17 @@ public class PlacarTest {
 		assertEquals(50, quantidadePontos);
 		quantidadePontos = placar.consultarQuantidadeDePontos("usuario123", "estrela");
 		assertEquals(50, quantidadePontos);
+	}
+	
+	@Test
+	void deveriaObterTodosOsPontosJaRegistradosParaUmDeterminadoUsuario() {
+		Map<TipoPonto, Integer> resultadoEsperado = new EnumMap<>(TipoPonto.class);
+		resultadoEsperado.putAll(Map.of(
+				TipoPonto.MOEDA, 20,
+				TipoPonto.ESTRELA, 25
+		));
+		Map<TipoPonto, Integer> resultadoObtido = placar.obterTodosOsTiposDePontoRegistradosParaOUsuario("guerra");
+		assertEquals(resultadoEsperado, resultadoObtido);
 	}
 
 }

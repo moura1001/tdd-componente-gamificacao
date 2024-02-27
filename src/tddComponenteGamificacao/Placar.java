@@ -1,5 +1,9 @@
 package tddComponenteGamificacao;
 
+import java.util.Map;
+
+import tddComponenteGamificacao.usuario.TipoPonto;
+
 public class Placar {
 
 	private Armazenamento _armazenamento;
@@ -14,6 +18,10 @@ public class Placar {
 
 	public int consultarQuantidadeDePontos(String nomeUsuario, String tipoPonto) {
 		return _armazenamento.obterQuantidadeDePontos(nomeUsuario, tipoPonto);
+	}
+
+	public Map<TipoPonto, Integer> obterTodosOsTiposDePontoRegistradosParaOUsuario(String nomeUsuario) {
+		return _armazenamento.obterTodosOsTiposDePontoRegistradosParaOUsuario(nomeUsuario);
 	}
 
 }
