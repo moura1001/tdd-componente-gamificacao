@@ -84,5 +84,26 @@ class ArmazenamentoTest {
 			assertEquals(resultadoEsperado, resultadoObtido);
 		}
 	}
+	
+	@Nested
+	@DisplayName("casos de teste para armazenamento dos pontos recebidos")
+	class ArmazenarPonto {
+		@Test
+		void deveriaArmazenarAAtualizaçãoDePontosRecebidaPeloUsuarioGuerraENaoAfetarOsOutrosRegistros() {
+			ArmazenamentoArquivo armazenamento = new ArmazenamentoArquivo("src/test/dados-teste-leitura.txt");
+			armazenamento.configurarArquivoDeArmazenamento("src/test/arquivo-teste-escrita.txt");
+			armazenamento.reescreverDadosNoArquivo();
+			armazenamento.armazenarPontos("guerra", "estrela", 15);
+			
+			int quantidadePontos = armazenamento.obterQuantidadeDePontos("guerra", "estrela");
+			assertEquals(40, quantidadePontos);
+			
+			quantidadePontos = armazenamento.obterQuantidadeDePontos("rodrigo", "estrela");
+			assertEquals(17, quantidadePontos);
+			
+			quantidadePontos = armazenamento.obterQuantidadeDePontos("toco", "energia");
+			assertEquals(10, quantidadePontos);
+		}
+	}
 
 }

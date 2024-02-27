@@ -11,7 +11,7 @@ public enum TipoPonto {
 		return null;
 	}
 	
-	static TipoPonto validarTipoPonto(String tipoPonto) throws UsuarioException {
+	public static TipoPonto validarTipoPonto(String tipoPonto) throws UsuarioException {
 		TipoPonto tipo = TipoPonto.encontrarPeloNome(tipoPonto);
 		if(tipo == null)
 			throw new UsuarioException("Tipo de ponto inválido: " + tipoPonto);

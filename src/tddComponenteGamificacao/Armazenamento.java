@@ -13,4 +13,6 @@ public interface Armazenamento {
 	SortedSet<InfoPonto> obterTodosOsUsuariosComTipoDePonto(String tipoPonto) throws UsuarioException;
 	
 	Map<TipoPonto, Integer> obterTodosOsTiposDePontoRegistradosParaOUsuario(String usuario) throws UsuarioException;
+	
+	void armazenarPontos(String usuario, String tipoPonto, int quantidadePontos) throws ArmazenamentoArquivoException;
 }
